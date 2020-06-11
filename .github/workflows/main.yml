@@ -43,5 +43,5 @@ jobs:
           --name hermapi \
           --settings \
             HASURA_GRAPHQL_ADMIN_SECRET=$HASURA_GRAPHQL_ADMIN_SECRET
-            HASURA_GRAPHQL_ENABLE_CONSOLE="true" \
+            HASURA_GRAPHQL_ENABLE_CONSOLE="false" \
             HASURA_GRAPHQL_ENABLED_LOG_TYPES="startup, http-log, webhook-log, websocket-log, query-log"

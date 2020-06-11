@@ -18,15 +18,6 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Update Hasura config
-      env:
-        HASURA_GRAPHQL_DATABASE_URL: ${{ secrets.HASURA_GRAPHQL_DATABASE_URL }}
-      run: |
-        az webapp config appsettings set \
-          --resource-group herm \
-          --name hermapi \
-          --settings HASURA_GRAPHQL_DATABASE_URL=$HASURA_GRAPHQL_DATABASE_URL
-
     - name: Update docker compose file
       env:
         HASURA_GRAPHQL_DATABASE_URL: ${{ secrets.HASURA_GRAPHQL_DATABASE_URL }}
@@ -36,3 +27,21 @@ jobs:
           --multicontainer-config-type compose \
           --resource-group herm \
           --name hermapi
+
+    - name: Update database connection string
+      env:
+        HASURA_GRAPHQL_DATABASE_URL: ${{ secrets.HASURA_GRAPHQL_DATABASE_URL }}
+      run: |
+        az webapp config appsettings set \
+          --resource-group herm \
+          --name hermapi \
+          --settings HASURA_GRAPHQL_DATABASE_URL=$HASURA_GRAPHQL_DATABASE_URL
+
+    - name: Update Hasura config
+      run: |
+        az webapp config appsettings set \
+          --resource-group herm \
+          --name hermapi \
+          --settings \
+            HASURA_GRAPHQL_ENABLE_CONSOLE="true" \
+            HASURA_GRAPHQL_ENABLED_LOG_TYPES="startup, http-log, webhook-log, websocket-log, query-log"

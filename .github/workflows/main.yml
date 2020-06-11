@@ -1,0 +1,43 @@
+name: Azure Web App Container
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    # Runs a single command using the runners shell
+    - uses: azure/login@v1.1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    # Runs a set of commands using the runners shell
+    - name: Run a multi-line script
+      env:
+        HASURA_GRAPHQL_DATABASE_URL: ${{ secrets.HASURA_GRAPHQL_DATABASE_URL }}
+      run: |
+        az webapp config appsettings set \
+          --resource-group herm \
+          --name hermapi \
+          --settings HASURA_GRAPHQL_DATABASE_URL=$HASURA_GRAPHQL_DATABASE_URL
+
+    - name: Update docker compose file
+      env:
+        HASURA_GRAPHQL_DATABASE_URL: ${{ secrets.HASURA_GRAPHQL_DATABASE_URL }}
+      run: |
+        az webapp config container set \
+          --multicontainer-config-file docker-compose.prod.yml \
+          --multicontainer-config-type compose \
+          --resource-group herm \
+          --name hermapi

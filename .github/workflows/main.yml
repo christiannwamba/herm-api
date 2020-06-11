@@ -36,7 +36,7 @@ jobs:
 
     - name: Update Hasura config
       env:
-        HASURA_GRAPHQL_ADMIN_SECRET: ${{ secretr.HASURA_GRAPHQL_ADMIN_SECRET }}
+        HASURA_GRAPHQL_ADMIN_SECRET: ${{ secrets.HASURA_GRAPHQL_ADMIN_SECRET }}
       run: |
         az webapp config appsettings set \
           --resource-group herm \

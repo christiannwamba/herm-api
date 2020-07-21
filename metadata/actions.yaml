@@ -1,6 +1,14 @@
-actions: []
+actions:
+- name: checkAndRegisterUser
+  definition:
+    kind: synchronous
+    handler: http://host.docker.internal:7071/api/checkAndRegisterUser
+    forward_client_headers: true
+  permissions:
+  - role: user
 custom_types:
   enums: []
   input_objects: []
-  objects: []
+  objects:
+  - name: CheckAndRegisterUserOutput
   scalars: []

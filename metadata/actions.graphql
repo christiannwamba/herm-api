@@ -1,2 +1,11 @@
+type Mutation {
+  checkAndRegisterUser : CheckAndRegisterUserOutput
+}
 
+
+
+
+type CheckAndRegisterUserOutput {
+  affected_rows : Int!
+}
 

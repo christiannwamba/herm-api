@@ -20,6 +20,16 @@
       - created_at
       - access_token_secret
       backend_only: false
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - account_name
+      filter:
+        account_users:
+          user:
+            username:
+              _eq: X-Hasura-User-Id
 - table:
     schema: public
     name: account_user
@@ -70,3 +80,13 @@
       - id
       - created_at
       backend_only: false
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - username
+      - id
+      - created_at
+      filter:
+        username:
+          _eq: X-Hasura-User-Id

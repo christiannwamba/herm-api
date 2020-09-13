@@ -1,0 +1,1 @@
+CREATE TABLE "public"."scheduled_post"("id" serial NOT NULL, "text" text NOT NULL, "schedule_for" timestamptz NOT NULL, "is_pending" boolean NOT NULL DEFAULT true, "user_id" integer NOT NULL, PRIMARY KEY ("id") , FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON UPDATE restrict ON DELETE restrict, UNIQUE ("id"));

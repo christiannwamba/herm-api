@@ -53,10 +53,76 @@
       - id
       - created_at
       backend_only: false
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - account_id
+      - user_id
+      - id
+      - created_at
+      filter:
+        user:
+          username:
+            _eq: X-Hasura-User-Id
   delete_permissions:
   - role: user
     permission:
       filter:
+        user:
+          username:
+            _eq: X-Hasura-User-Id
+- table:
+    schema: public
+    name: scheduled_post
+  object_relationships:
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        user:
+          username:
+            _eq: X-Hasura-User-Id
+      columns:
+      - created_at
+      - id
+      - is_pending
+      - schedule_for
+      - text
+      - user_id
+      backend_only: false
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - created_at
+      - id
+      - is_pending
+      - schedule_for
+      - text
+      - user_id
+      filter:
+        user:
+          username:
+            _eq: X-Hasura-User-Id
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - is_pending
+      - id
+      - user_id
+      - text
+      - created_at
+      - schedule_for
+      filter:
+        user:
+          username:
+            _eq: X-Hasura-User-Id
+      check:
         user:
           username:
             _eq: X-Hasura-User-Id
@@ -71,6 +137,13 @@
         table:
           schema: public
           name: account_user
+  - name: scheduled_posts
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          schema: public
+          name: scheduled_post
   insert_permissions:
   - role: user
     permission:
@@ -88,5 +161,18 @@
       - id
       - created_at
       filter:
+        username:
+          _eq: X-Hasura-User-Id
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - username
+      - id
+      - created_at
+      filter:
+        username:
+          _eq: X-Hasura-User-Id
+      check:
         username:
           _eq: X-Hasura-User-Id

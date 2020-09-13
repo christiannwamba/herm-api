@@ -69,7 +69,6 @@ async function userExists(client, username) {
     `;
   try {
     const result = await client(GET_USER, { username });
-    console.log(result)
     return result.data.user.length > 0;
   } catch (error) {
     throw error;

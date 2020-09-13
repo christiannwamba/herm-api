@@ -3,6 +3,9 @@
   "Values": {
     "FUNCTIONS_WORKER_RUNTIME": "node",
     "AzureWebJobsStorage": "",
-    "GRAPHQL_BASE_API": "http://localhost:3100"
+    "GRAPHQL_BASE_API": "http://localhost:3100",
+    "CONSUMER_API_KEY": "CONSUMER_API",
+    "CONSUMER_API_SECRET": "CONSUMER_SECRET",
+    "HASURA_GRAPHQL_ADMIN_SECRET": "supersecretkey"
   }
 }

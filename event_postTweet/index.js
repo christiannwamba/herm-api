@@ -4,10 +4,7 @@ const Twitter = require('twitter-lite');
 module.exports = async function (context, req) {
   try {
     const { payload } = req.body;
-    console.log({ payload });
-    console.log(process.env.CONSUMER_API_SECRET);
     const keys = await getAccessKeys(payload.user_id);
-    console.log({ payload, keys });
 
     const client = new Twitter({
       consumer_key: process.env.CONSUMER_API_KEY,
